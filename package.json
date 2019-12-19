@@ -37,7 +37,7 @@
     "recursive-readdir": "^2.2.2",
     "rethinkdbdash": "^2.3.31",
     "retrotext": "^2.1.2",
-    "snekfetch": "^3.6.4",
+    "snekfetch": "3.6.4",
     "steamidconvert": "^0.2.4",
     "superagent": "^3.8.3",
     "tall": "^1.0.2",
