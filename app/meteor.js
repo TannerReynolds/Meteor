@@ -7,10 +7,6 @@ const path = require('path');
 const utils = require(`${__dirname}/util`);
 const routes = require(`${__dirname}/routes`);
 const events = require(`${__dirname}/events`);
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('db.json');
-const db = low(adapter);
 const helmet = require('helmet');
 const scan = require("recursive-readdir")
 
@@ -20,22 +16,29 @@ class Meteor {
  * @param {object} c - configuration json file
  */
   constructor(c) {
-      this.db = db;
-      /** Setting LowDB Defaults */
-      db.defaults({
-          guilds: [],
-          channels: [],
-          users: [],
-      })
-          .write();
       this.app = app;
       this.c = c;
       this.utils = utils;
       this.events = events;
       this.log = this.utils.logger;
       this.scan = scan;
+      this.commands = [];
       this.masscmds = new Set();
       this.othercmds = new Set();
+      this.emojis = {
+        error: '<:error:636070048867287041>',
+        success: '<:tzTickYes:502703803154432010>',
+        dnd: '<:DND:502703802936459274>',
+        offline: '<:Offline:502703802915356672>',
+        online: '<:online:502703803133591553>',
+        away: '<:away:502703802919419924>',
+      }
+      this.defaults = {
+        guildIcon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png"
+      }
+
+      this.runDiscordBot();
+      this.startWebsite();
 
       this.app.set('view engine', 'ejs');
       this.app.set('views', path.join(__dirname, '/views'));
@@ -45,14 +48,16 @@ class Meteor {
       this.app.use(bodyParser.urlencoded({
         extended: true,
       }));
+      this.app.use(express.static(`${__dirname}/views/`, {
+        extensions: ['css', 'js', 'png', 'jpg', 'gif', 'svg', 'html'],
+      }));
 
-      this.app.get('/', res.send('<h1>Web Works'));
+      this.app.get('/', routes.main.bind(this));
     }
 
     async runDiscordBot() {
-      this.bot = new Eris(this.c.discordToken, { maxShards: "auto", getAllUsers: true, disableEveryone: false, defaultImageSize: 2048, defaultImageFormat: "png" })
+      this.bot = new Eris(this.c.discordToken, { maxShards: "auto", getAllUsers: true, disableEveryone: false, defaultImageFormat: "png" })
       this.log.verbose('Connecting to Discord...');
-      this.commands = [];
       this.loadCommands();
       this.bot
         .on('messageCreate', this.events.messageCreate.bind(this))
@@ -70,13 +75,20 @@ class Meteor {
 
     async loadCommands() {
       this.scan(`${__dirname}/commands/`, (err, files) => {
-        for(i = 0; i < files.length; i++) {
+        for(let i = 0; i < files.length; i++) {
             if(files[i].endsWith(".js")) {
-              let file = `./${files[i]}`
+              let file = `${files[i]}`
+              this.log.success(files[i])
               delete require.cache[require.resolve(file)];
               this.commands.push(require(file))
             }
         }
+      });
+    }
+
+    async startWebsite() {
+      this.app.listen(this.c.port, '0.0.0.0', () => {
+        this.log.success(`Server listening on port ${this.c.port}`);
       });
     }
   }

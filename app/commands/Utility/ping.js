@@ -28,7 +28,7 @@ module.exports = {
       "ringa ding",
       "a shitty teen house party",
       "the crackhouse on 17th street",
-      "http://thiccbit.ch",
+      "https://",
       "Pixilia",
       "twitter dot com",
       "the local abortion clinic",
@@ -60,13 +60,21 @@ module.exports = {
       "Owen Wilson's nose",
       "superiorservers",
       "my girlfriend's massive cock",
-      "havana oh nanaananananaananan",
+      "Meteor oh nanaananananaananan",
       "AT&T",
       "b1nzy",
       "b1nzy's cat",
       "hypesquad",
       "my dad",
-      "aaaaaaaaaaaaa"
+      "aaaaaaaaaaaaa",
+      "random short bald man stuck in traffic",
+      "Discord T&S",
+      "Luke Skywalker",
+      "Donald Trump's wife",
+      "Zelensky",
+      "Earth",
+      "Elon Musk's anime server",
+      "medal.tv"
     ]
     let botPing = Math.floor(msg.channel.guild.shard.latency);
     let ran = Math.floor(Math.random() * pinging.length);

@@ -40,10 +40,10 @@ module.exports = {
             },
             title: `${msg.channel.guild.name} Staff`,
             fields: [
-                {name: "<:online:409660331401412608> Online", value: staffOnline.join(", ")},
-                {name: "<:DND:409660329736404992> DND", value: staffDnd.join(", ")},
-                {name: "<:away:409660329702719488> Idle", value: staffAway.join(", ")},
-                {name: "<:Offline:409660331267457025> Offline", value: staffOffline.join(", ")},
+                {name: `${meteor.emojis.online} Online`, value: staffOnline.join(", ")},
+                {name: `${meteor.emojis.dnd} DND`, value: staffDnd.join(", ")},
+                {name: `${meteor.emojis.away} Idle`, value: staffAway.join(", ")},
+                {name: `${meteor.emojis.offline} Offline`, value: staffOffline.join(", ")},
             ]
         }})
   }

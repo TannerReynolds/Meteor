@@ -9,9 +9,9 @@ module.exports = {
     permission: "sendMessages",
     botPermission: "attachFiles",
     execute: async (meteor, bot, msg, args) => {
-        meteor.util.handleImgArgs(bot, msg, args, renderImage);
+        meteor.utils.imgHandler.parse(bot, msg, args, renderImage);
         async function renderImage(img) {
-            s.get(`https://api.qoilo.com/imgen?url=${img}&effect=drakeandjosh`).then(r => msg.channel.createMessage('', {file: r.body, name: 'render.jpg'}))
+            s.get(`https://api.meteorbot.space/drakeandjosh?url=${img}`).then(r => msg.channel.createMessage('', {file: r.body, name: 'render.jpg'}))
         }
     }
 }

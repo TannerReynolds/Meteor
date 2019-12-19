@@ -8,10 +8,10 @@ module.exports = {
     execute: async (meteor, bot, msg, args) => {
         if(!msg.channel.guild) return;
         let guild = msg.channel.guild;
-        let icon = "https://i.imgur.com/RHagTDg.png"
+        let icon = meteor.defaults.guildIcon;
         let name = guild.name;
-        let memCount = getMemberCount();
-        let botCount = getBotCount();
+        let memCount = getMemberCount("user");
+        let botCount = getMemberCount("bot");
         let region = guild.region;
         let id = guild.id;
         let owner = `<@${guild.ownerID}>`;
@@ -39,12 +39,14 @@ module.exports = {
                 url: icon
             }
         }})
-        function getMemberCount() {
+        function getMemberCount(type) {
             let online = [];
             let offline = [];
             let away = [];
             let dnd = [];
-            msg.channel.guild.members.map(m => {
+            let toMap
+            type === "user" ? toMap = msg.channel.guild.members : toMap = msg.channel.guild.members.filter(m => m.bot)
+            toMap.map(m => {
                 if(m.status === "online") {
                     online.push(m.id);
                   }
@@ -62,35 +64,7 @@ module.exports = {
               dnd.length >= 1 ? dnd = dnd.length : dnd = "0";
               away.length >= 1 ? away = away.length : away = "0";
               offline.length >= 1 ? offline = offline.length : offline = "0";
-              let mems = `**<:online:409660331401412608> Online**: \`${online}\`\n**<:DND:409660329736404992> DND**: \`${dnd}\`\n**<:away:409660329702719488> Idle**: \`${away}\`\n**<:Offline:409660331267457025> Offline**: \`${offline}\`\n**<:tzTickYes:409660331720310787> Total**: \`${msg.channel.guild.memberCount}\``;
-              return mems;
-        }
-        function getBotCount() {
-            let bots = msg.channel.guild.members.filter(m => m.bot)
-            let online = [];
-            let offline = [];
-            let away = [];
-            let dnd = [];
-            bots.map(m => {
-                if(m.status === "online") {
-                    online.push(m.id);
-                  }
-                  if(m.status === "offline") {
-                      offline.push(m.id);
-                  }
-                  if(m.status === "idle") {
-                      away.push(m.id);
-                  }
-                  if(m.status === "dnd") {
-                      dnd.push(m.id);
-                  }
-              });
-              online.length >= 1 ? online = online.length : online = "0";
-              dnd.length >= 1 ? dnd = dnd.length : dnd = "0";
-              away.length >= 1 ? away = away.length : away = "0";
-              offline.length >= 1 ? offline = offline.length : offline = "0";
-              let botString = `**<:online:409660331401412608> Online**: \`${online}\`\n**<:DND:409660329736404992> DND**: \`${dnd}\`\n**<:away:409660329702719488> Idle**: \`${away}\`\n**<:Offline:409660331267457025> Offline**: \`${offline}\`\n**<:tzTickYes:409660331720310787> Total**: \`${bots.length}\``;
-              return botString;
+              return `\n**${meteor.emojis.online} Online**: \`${online}\` \n**${meteor.emojis.dnd} DND**: \`${dnd}\` \n**${meteor.emojis.away} Idle**: \`${away}\` \n**${meteor.emojis.offline} Offline**: \`${offline}\` \n** ${meteor.emojis.success} Total**: \`${type === "user" ? toMap.size : toMap.length}\``;
         }
     }
   }

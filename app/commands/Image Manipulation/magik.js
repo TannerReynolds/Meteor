@@ -8,7 +8,7 @@ module.exports = {
     permission: "sendMessages",
     botPermission: "attachFiles",
     execute: async (meteor, bot, msg, args) => {
-        meteor.util.handleImgArgs(bot, msg, args, renderImage);
+        meteor.utils.imgHandler.parse(bot, msg, args, renderImage);
         function renderImage(img) {
             msg.channel.createMessage("\<a:loading:393670580232257538>").then(m => {
             snekfetch.get(`https://discord.services/api/magik?url=${img}`)
