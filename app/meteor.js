@@ -33,7 +33,7 @@ class Meteor {
         online: '<:online:502703803133591553>',
         away: '<:away:502703802919419924>',
         dice: '🎲',
-        cookie: '🥠'
+        cookie: '🥠',
       }
       this.defaults = {
         guildIcon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png"
