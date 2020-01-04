@@ -7,7 +7,7 @@ module.exports = {
     botPermission: "sendMessages",
     execute: async (meteor, bot, msg, args) => {
         function flip() {
-            var rand = ['Heads', 'Tails']
+            let rand = ['Heads', 'Tails']
     
             return rand[Math.floor(Math.random() * rand.length)]
         }
