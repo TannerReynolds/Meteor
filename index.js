@@ -5,7 +5,7 @@ const Meteor = require(`${__dirname}/app/meteor`);
 /** Setting definitions for the config file and server class */
 let c;
 let app;
-console.log('Loading Meteor...')  
+console.log('Loading Config...')  
 async function loadConfig() {
     process.argv[2] === '-test'
         ? c = require(`${__dirname}/config.real.json`)
@@ -14,10 +14,11 @@ async function loadConfig() {
 
 loadConfig().then(() => {
     /** Starting server using the selected config file */
+    console.log('Loading Meteor...')  
     app = new Meteor(c);
 });
 process.on('SIGINT', async () => {
-    app.log.warning('Gracefully exiting..');
+    app.log.verbose('Gracefully exiting..');
     process.exit();
 });
 

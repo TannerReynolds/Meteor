@@ -1,4 +1,3 @@
-const config = require("../../config.json");
 module.exports = {
   command:"suggest",
   description: "Send the developers a suggestion",

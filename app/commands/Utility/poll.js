@@ -22,8 +22,8 @@ module.exports = {
             color: 0x36393E
         }
     }).then(m => {
-        m.addReaction("tzTickYes:409660331720310787").then(() => {
-            m.addReaction("tzTickNo:409660331577835521");
+        m.addReaction(meteor.emojis.success.replace(/<|>/g,'')).then(() => {
+            m.addReaction(meteor.emojis.error.replace(/<|>/g,''));
         })
     });
     msg.delete();

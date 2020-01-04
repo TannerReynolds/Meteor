@@ -1,0 +1,118 @@
+body, html {
+  background-color: #1A1A1A;
+}
+.landing-title {
+  font-size: 60pt !important;
+}
+.landing-subtitle {
+  font-family: Raleway, Helvetica, sans-serif;
+}
+.head-text {
+  font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+}
+
+.svvg {
+    background: url('../svg/bg.svg') no-repeat;
+    background-size: cover;
+}
+.first {
+    background: url('../svg/1st-01.svg') no-repeat;
+    background-size: cover;
+    width: 100%;
+    padding-bottom: 100px;
+    margin-bottom: -5px;
+    margin-top: -100px;
+}
+.first-under {
+  background-color: #303438;
+}
+
+.footer {
+  background-color: #1A1A1A !important;
+  color: white !important;
+}
+.footer a {
+  color: #ffd586;
+}
+.a {
+  width: 30% !important;
+}
+@media only screen and (max-width: 1088px) {
+    .navbar-menu {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+      background-image: none !important;
+    }
+  }
+  @media only screen and (min-width: 1089px) {
+    .navbar-menu {
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+  }
+  th,tr,td {
+    color: white !important;
+  }
+  .b {
+    font-weight: bold;
+  }
+
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+.tcon,th,tr,td {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  color:#A7A1AE;
+}
+
+
+
+.tcon th h1 {
+	  font-weight: bold;
+	  font-size: 1em;
+  text-align: left;
+  color: #185875;
+}
+
+.tcon td {
+	  font-weight: normal !important;
+	  font-size: 1em !important;
+}
+
+
+
+.tcon {
+  text-align: left !important;
+  overflow: scroll !important;
+  margin: 0 auto !important;
+display: table !important;
+padding: 0 0 8em 0 !important;
+border-radius: 20px !important;
+}
+table {
+  border-radius: 20px !important;
+}
+
+.tcon td, .tcon th {
+  padding-bottom: 2% !important;
+  padding-top: 2% !important;
+padding-left:2% !important; 
+padding-right: 2% !important;
+}
+
+/* Background-color of the odd rows */
+.tcon tr:nth-child(odd) {
+	  background-color: #323C50;
+}
+
+/* Background-color of the even rows */
+.tcon tr:nth-child(even) {
+	  background-color: #2C3446;
+}
+
+.tcon th {
+    background-color: #1F2739;
+    font-weight: bold;
+    padding-right: 2%;
+}
+
+.tcon td:first-child { color: #FB667A; }

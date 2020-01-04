@@ -7,20 +7,21 @@ module.exports = {
   permission: "sendMessages",
   botPermission: "embedLinks",
   execute: async (meteor, bot, msg, args) => {
-    let prefix = ")>"
+    let prefix = ")>";
+    /*
     let guildDB = meteor.db.get('guilds').find({ id: msg.channel.guild.id }).value();
     if(guildDB !== undefined) {
       if(guildDB.prefix) {
         prefix = guildDB.prefix
       }
-    }
+    }*/
     if (!args[0] || args[0] === undefined) {
       await msg.channel.createMessage({ embed: { 
         color: 0x36393E, 
         fields: [
-          {name: "All Commands", value: "All commands for Havana are listed here on our website: https://meteorbot.space/commands"},
-          {name: "» Our Discord Server 🏰", value: "https://meteorbot.space/discord"},
-          {name: "Donations", value: "stripe payment link\npatreon link"}
+          {name: "All Commands", value: "All commands for Meteor are listed here on our website: https://meteorbot.space"},
+          {name: "Our Discord Server 🏰", value: "https://meteorbot.space/discord"},
+          {name: "Donations", value: "https://meteorbot.space/donate"}
         ],
         author: {
           icon_url: msg.author.avatarURL,
@@ -37,12 +38,12 @@ module.exports = {
       let description = null;
       let category = null;
       let permission = null;
-      for(i = 0; i < commands.length; i++) {
-        if(commands[i].command.toLowerCase() === args[0]) {
-          syntax = commands[i].syntax;
-          description = commands[i].description;
-          category = commands[i].category;
-          permission = commands[i].permission;
+      for(i = 0; i < meteor.commands.length; i++) {
+        if(meteor.commands[i].command.toLowerCase() === args[0]) {
+          syntax = meteor.commands[i].syntax;
+          description = meteor.commands[i].description;
+          category = meteor.commands[i].category;
+          permission = meteor.commands[i].permission;
         }
       }
       await msg.channel.createMessage({ embed: { 

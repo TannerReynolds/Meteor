@@ -8,7 +8,7 @@ module.exports = {
     permission: "sendMessages",
     botPermission: "attachFiles",
     execute: async (meteor, bot, msg, args) => {
-        meteor.util.handleImgArgs(bot, msg, args, renderImage);
+        meteor.utils.imgHandler.parse(bot, msg, args, renderImage);
         async function renderImage(img) {
             snekfetch.get(`http://triggered-api.tk/api/v1/url=${img}`)
             .then(r => {

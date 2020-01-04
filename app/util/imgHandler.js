@@ -1,5 +1,5 @@
 module.exports = {
-    handleImgArgs: async(bot, msg, args, renderImage) => {
+    parse: async(bot, msg, args, renderImage) => {
         if(msg.attachments.length >= 1) {
             let img = msg.attachments[0].proxy_url;
             renderImage(img);

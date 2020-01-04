@@ -9,7 +9,7 @@ module.exports = {
   permission: "sendMessages",
   botPermission: "attachFiles",
   execute: async (meteor, bot, msg, args) => {
-    meteor.util.handleImgArgs(bot, msg, args, renderImage);
+    meteor.utils.imgHandler.parse(bot, msg, args, renderImage);
     async function renderImage(img) {
       let res = await superagent.get(img)
       await faceapp.process(res.body, 'hitman').then(hitmanPic => {

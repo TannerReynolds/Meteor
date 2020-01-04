@@ -2,19 +2,25 @@ async function messageCreate(msg) {
   let pref = this.c.prefix;
   let mentionPrefRegex = /<@(!)?635347873344782337>/;
   if(msg.author.bot) return;
-  let sendMessages = msg.channel.permissionsOf(bot.user.id).has("sendMessages");
-  let embedLinks = msg.channel.permissionsOf(bot.user.id).has("embedLinks");
+  let sendMessages = msg.channel.permissionsOf(this.bot.user.id).has("sendMessages");
+  let embedLinks = msg.channel.permissionsOf(this.bot.user.id).has("embedLinks");
   if(!sendMessages) return;
   if(!embedLinks) msg.channel.createMessage("This bot requires the `embedLinks`/`attachFiles` permissions in order for all of it's functions to work properly")
 
-  let channelDB = this.db.get('channels').find({ id: msg.channel.id }).value();
-  let guildDB = this.db.get('guilds').find({ id: msg.channel.guild.id }).value();
+  //let channelDB = this.db.get('channels').find({ id: msg.channel.id }).value();
+  //let guildDB = this.db.get('guilds').find({ id: msg.channel.guild.id }).value();
 
   let mentionPref = pref
   if(msg.content.match(mentionPrefRegex)) {
     mentionPref = msg.content.match(mentionPrefRegex)[0]
   }
-
+  let commands = this.commands;
+  let bot = this.bot
+  let meteor = this
+  let masscmds = this.masscmds;
+  let othercmds = this.othercmds;
+  let c = this.c;
+/*
   if(channelDB !== undefined) {
       if(channelDB.pollingChannel === true) {
         msg.addReaction("tzTickYes:409660331720310787")
@@ -32,10 +38,10 @@ async function messageCreate(msg) {
         }
       }
   }
-
+*/
   let customPrefix = false;
   let blacklisted = 0
-
+/*
   if(guildDB !== undefined) {
       if(guildDB.adblock === true) {
         if(msg.content.match(/\b(?:https?:\/\/)?discord(?:app)?\.(?:com\/invite\/|gg)+\/*([A-Za-z_0-9]+)/g)) {
@@ -55,15 +61,15 @@ async function messageCreate(msg) {
           customPrefix = guildDB.prefix
       }
   }
-
+*/
 
   // Reload function for commands
   if(msg.content === `${pref}rl` && c.devs.includes(msg.author.id)) {
       this.commands = [];
-      this.scan("./commands/", (err, files) => {
+      this.scan(`${__dirname}/../commands/`, (err, files) => {
         for(i = 0; i < files.length; i++) {
             if(files[i].endsWith(".js")) {
-              let file = `./${files[i]}`
+              let file = `${files[i]}`
               delete require.cache[require.resolve(file)];
               this.commands.push(require(file))
             }
@@ -126,34 +132,34 @@ async function messageCreate(msg) {
         
         // if command is a mass command to add/remove/respond to cooldown. Mass cooldown is an hour
         if(commands[i].command.startsWith("mass")) {
-          if(this.masscmds.has(msg.author.id) && nitroBooster === false) {
+          if(masscmds.has(msg.author.id) && nitroBooster === false) {
               cooldown = 3600000
               return msg.channel.createMessage("Please wait an hour before running another `mass` command\nYou can lower the ratelimit to just 10 minutes if you nitro boost Meteor's server @ https://meteorbot.space/discord")
-          } else if(this.masscmds.has(msg.author.id) && nitroBooster === true) {
+          } else if(masscmds.has(msg.author.id) && nitroBooster === true) {
               cooldown = 600000
               return msg.channel.createMessage("Please wait 10 minutes before running another `mass` command\nThank you for being a nitro booster on Meteor's server!")
           } else {
               if(nitroBooster === false) {
-                this.masscmds.add(msg.author.id);
+                masscmds.add(msg.author.id);
                 setTimeout(() => masscmds.delete(msg.author.id), 3600000);
               } else {
-                this.masscmds.add(msg.author.id);
+                masscmds.add(msg.author.id);
                 setTimeout(() => masscmds.delete(msg.author.id), 600000);
               }
           }
         } else { // Otherwise use the default cooldown of 3 second
-          if(this.othercmds.has(msg.author.id) && nitroBooster === false) {
+          if(othercmds.has(msg.author.id) && nitroBooster === false) {
             return msg.channel.createMessage("Please wait 3 seconds before running another command\nYou can get rid of the ratelimit if you nitro boost Meteor's server @ https://meteorbot.space/discord")
           } else {
               if(nitroBooster === false) {
-                this.othercmds.add(msg.author.id);
+                othercmds.add(msg.author.id);
                 setTimeout(() => othercmds.delete(msg.author.id), 3000);
               }
           }
         }
 
         // Run the command
-        await commands[i].execute(this, this.bot, msg, args);
+        await commands[i].execute(meteor, bot, msg, args);
         break;
       }
     }
