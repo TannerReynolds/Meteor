@@ -7,4 +7,4 @@ module.exports = {
     botPermission: "sendMessages",
     execute: async (meteor, bot, msg, args) => {
         msg.channel.createMessage(`:game_die: You rolled a ${Math.floor(Math.random() * 6) + 1}`)
-    }
+    }}
