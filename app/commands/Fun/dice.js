@@ -6,5 +6,5 @@ module.exports = {
     permission: "sendMessages",
     botPermission: "sendMessages",
     execute: async (meteor, bot, msg, args) => {
-        msg.channel.createMessage(`${meteor.emojis.dice} You rolled a ${Math.floor(Math.random() * 6) + 1}`)
-    }}
+        msg.channel.createMessage(`${meteor.emojis.dice} You rolled a ${Math.floor(Math.random() * 6) + 1}`);
+    }};
