@@ -10,6 +10,6 @@ module.exports = {
             let rand = ['Heads', 'Tails']
     
             return rand[Math.floor(Math.random() * rand.length)]
-        }
-        msg.channel.createMessage(`You landed on: ${flip()}`)
-    }}
+        };
+        msg.channel.createMessage(`You landed on: ${flip()}`);
+    }};
