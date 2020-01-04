@@ -12,4 +12,4 @@ module.exports = {
             return rand[Math.floor(Math.random() * rand.length)]
         }
         msg.channel.createMessage(`You landed on: ${flip()}`)
-    }
+    }}
