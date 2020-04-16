@@ -11,5 +11,5 @@ module.exports = {
     
             return rand[Math.floor(Math.random() * rand.length)]
         };
-        msg.channel.createMessage(`:fortune_cookie: | ${cookie()}`);
+        msg.channel.createMessage(`${meteor.emojis.cookie} | ${cookie()}`);
     }};
